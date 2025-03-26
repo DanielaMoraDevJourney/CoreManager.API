@@ -19,9 +19,6 @@
 
   <ItemGroup>
     <Folder Include="CoreManager.Application\Services\" />
-    <Folder Include="CoreManager.Domain\DTOs\" />
-    <Folder Include="CoreManager.Domain\Interfaces\" />
-    <Folder Include="CoreManager.Domain\Models\" />
     <Folder Include="CoreManager.Infraestructure\Data\" />
     <Folder Include="CoreManager.Infraestructure\Repository\" />
     <Folder Include="CoreManager.WebApplication\Controllers\" />
