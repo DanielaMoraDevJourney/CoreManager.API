@@ -18,8 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CoreManager.Infraestructure\Data\" />
-    <Folder Include="CoreManager.Infraestructure\Repository\" />
     <Folder Include="CoreManager.WebApplication\Controllers\" />
   </ItemGroup>
 
