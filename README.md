@@ -1,31 +1,47 @@
 ﻿# CoreManager.API
 
-RESTful API developed in **ASP.NET Core + Clean Architecture**, designed to manage users using CRUD operations.
+RESTful API developed using **ASP.NET Core + Clean Architecture**, designed for managing users via full CRUD operations.
 
 ---
 
-## Project Structure
+## 🏗 Project Architecture
 
-The project follows the principles of **Clean Architecture**, separating responsibilities by layers:
+This solution follows the **Clean Architecture** principles, organizing code by concerns:
 
-- `CoreManager.Domain`: Entities, interfaces, and DTOs (no external dependencies)
-- `CoreManager.Application`: Services with business logic and system rules
-- `CoreManager.Infrastructure`: Data access and configuration for EF Core
-- `CoreManager.WebApplication`: Controllers that expose the API (presentation layer)
+- `CoreManager.Domain`: Domain models, interfaces, DTOs (no external dependencies)
+- `CoreManager.Application`: Application layer with business rules and logic
+- `CoreManager.Infrastructure`: Persistence logic and EF Core database configuration
+- `CoreManager.WebApplication`: API controllers (presentation layer)
 
 ---
 
-## Technologies
+## 💡 Tech Stack
 
 - .NET 8
 - ASP.NET Core Web API
-- Entity Framework Core
+- Entity Framework Core 9
 - SQL Server / SQLite
-- Swagger (interactive documentation)
+- Swagger (via Swashbuckle)
 
 ---
 
-## How to run the project
+## 📦 Required NuGet Packages
+
+To ensure the API runs correctly, make sure the following packages are installed:
+
+| Package | Version |
+|--------|---------|
+| `Microsoft.EntityFrameworkCore` | 9.0.3 |
+| `Microsoft.EntityFrameworkCore.SqlServer` | 9.0.3 |
+| `Microsoft.EntityFrameworkCore.Tools` | 9.0.3 |
+| `Microsoft.VisualStudio.Web.CodeGeneration.Design` | 8.0.7 |
+| `Swashbuckle.AspNetCore` | 6.6.2 |
+
+These can be added via **NuGet Package Manager** or using the Package Manager Console.
+
+---
+
+## 🚀 Getting Started
 
 ### 1. Clone the repository
 
@@ -34,61 +50,61 @@ git clone https://github.com/DanielaMoraDevJourney/CoreManager.API.git
 cd CoreManager.API
 ```
 
-### 2. Add the connection string to `appsettings.json`
+### 2. Add your database connection string to `appsettings.json`
 
 ```json
 "ConnectionStrings": {
-"context": "Server=(localdb)\MSSQLLocalDB;Database=CoreManagerDb;Trusted_Connection=True;"
+  "context": "Server=(localdb)\MSSQLLocalDB;Database=CoreManagerDb;Trusted_Connection=True;"
 }
 ```
 
-### 3. Run migrations with EF
+### 3. Optional: Remove current migration (if needed)
+
+```
+Remove-Migration InitialCreate
+```
+
+### 4. Add your migration
 
 ```
 Add-Migration InitialCreate
 ```
-### 4. Create the database with EF
+
+### 5. Apply migrations and create the database
+
 ```
 Update-Database
 ```
 
-### 5. Start the server
+### 6. Run the project
 
-Access Swagger at:
-📍 `https://localhost:{port}/swagger`
+Once running, Swagger will be available at:
+
+📍 `https://localhost:{PORT}/swagger`
 
 ---
 
-## 📬 Available endpoints
+## 📡 API Endpoints
 
-| Method | Endpoint | Description |
-|--------|------------------|------------------------|
-| GET | `/api/users` | Get all users |
-| GET | `/api/users/{id}` | Get a user by ID |
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | `/api/users` | Retrieve all users |
+| GET | `/api/users/{id}` | Get user by ID |
 | POST | `/api/users` | Create a new user |
-| PUT | `/api/users/{id}` | Update a user |
-| DELETE | `/api/users/{id}` | Delete a user |
+| PUT | `/api/users/{id}` | Update user |
+| DELETE | `/api/users/{id}` | Delete user |
 
 ---
 
-## Recommended Commit Structure
+## 👩‍💻 Author
 
-We use conventional commits to maintain a clean and understandable history:
-- `feat`: new functionality
-- `fix`: bug fixes
-- `chore`: general tasks
-- `refactor`: code changes without affecting functionality
-
----
-
-## Author
-
-Daniela Mora – Web Engineering Project
+**Daniela Mora**  
+Web Engineering Project  
 📚 7th semester – 2025
 
 ---
 
-## Project Status
+## 📌 Project Status
 
-🟢 Complete and functional backend
-🟢 Complete and functional frontend
+✅ Backend fully functional  
+✅ Frontend fully integrated and responsive
