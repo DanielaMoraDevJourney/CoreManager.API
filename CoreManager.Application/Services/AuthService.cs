@@ -8,39 +8,38 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace CoreManager.API.CoreManager.WebApplication.Controllers
+namespace CoreManager.API.CoreManager.Application.Services
 {
-
-    [ApiController]
-    [Route("api/admin")]
-    public class AdminAuthController : ControllerBase
+    public class AuthService
     {
         private readonly IAdminUserRepository _repository;
         private readonly IConfiguration _config;
 
-        public AdminAuthController(IAdminUserRepository repository, IConfiguration config)
+        public AuthService(IAdminUserRepository repository, IConfiguration config)
         {
             _repository = repository;
             _config = config;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginAdminDto loginDto)
+        public async Task<string?> Authenticate(LoginAdminDto loginDto)
         {
             var user = await _repository.GetByUsernameAsync(loginDto.Username);
-            if (user == null)
-                return Unauthorized("Invalid credentials");
+            if (user == null) return null;
 
             var hasher = new PasswordHasher<AdminUser>();
             var result = hasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password);
-            if (result == PasswordVerificationResult.Failed)
-                return Unauthorized("Invalid credentials");
+            if (result == PasswordVerificationResult.Failed) return null;
 
+            return GenerateJwtToken(user);
+        }
+
+        private string GenerateJwtToken(AdminUser user)
+        {
             var claims = new[]
             {
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.Role, "Admin")
-        };
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, "Admin")
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -52,7 +51,7 @@ namespace CoreManager.API.CoreManager.WebApplication.Controllers
                 signingCredentials: creds
             );
 
-            return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
