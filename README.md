@@ -231,6 +231,7 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 This project is currently maintained as part of a university course.  
 Pull requests are welcome, but feel free to fork and build on top of it.
+> Thanks for visiting this repo! Feel free to star ⭐ the project if you found it helpful!
 
 ---
 
