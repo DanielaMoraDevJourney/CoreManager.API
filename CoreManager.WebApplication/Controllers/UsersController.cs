@@ -1,12 +1,13 @@
 ﻿using CoreManager.API.CoreManager.Application.Services;
 using CoreManager.API.CoreManager.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreManager.API.CoreManager.WebApplication.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")] 
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
@@ -16,7 +17,6 @@ namespace CoreManager.API.CoreManager.WebApplication.Controllers
             _userService = userService;
         }
 
-        // GET: api/users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAll()
         {
@@ -25,7 +25,6 @@ namespace CoreManager.API.CoreManager.WebApplication.Controllers
             return Ok(dtoList);
         }
 
-        // GET: api/users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetById(int id)
         {
@@ -36,7 +35,6 @@ namespace CoreManager.API.CoreManager.WebApplication.Controllers
             return Ok(UserMapper.ToDto(user));
         }
 
-        // POST: api/users
         [HttpPost]
         public async Task<ActionResult<UserDto>> Create([FromBody] CreateUserDto dto)
         {
@@ -52,7 +50,6 @@ namespace CoreManager.API.CoreManager.WebApplication.Controllers
             }
         }
 
-        // PUT: api/users/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateUserDto dto)
         {
@@ -71,7 +68,6 @@ namespace CoreManager.API.CoreManager.WebApplication.Controllers
             }
         }
 
-        // DELETE: api/users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
