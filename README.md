@@ -1,6 +1,6 @@
 ﻿# CoreManager.API
 
-RESTful API developed using **ASP.NET Core + Clean Architecture**, designed for managing users via full CRUD operations.
+RESTful API developed using **ASP.NET Core + Clean Architecture**, designed for managing users via full CRUD operations and secure authentication via JWT.
 
 ---
 
@@ -22,6 +22,7 @@ This solution follows the **Clean Architecture** principles, organizing code by 
 - Entity Framework Core 9
 - SQL Server / SQLite
 - Swagger (via Swashbuckle)
+- JWT Authentication (Bearer Token)
 
 ---
 
@@ -36,6 +37,7 @@ To ensure the API runs correctly, make sure the following packages are installed
 | `Microsoft.EntityFrameworkCore.Tools` | 9.0.3 |
 | `Microsoft.VisualStudio.Web.CodeGeneration.Design` | 8.0.7 |
 | `Swashbuckle.AspNetCore` | 6.6.2 |
+| `Microsoft.AspNetCore.Authentication.JwtBearer` | 8.0.0 |
 
 These can be added via **NuGet Package Manager** or using the Package Manager Console.
 
@@ -54,7 +56,7 @@ cd CoreManager.API
 
 ```json
 "ConnectionStrings": {
-  "context": "Server=(localdb)\MSSQLLocalDB;Database=CoreManagerDb;Trusted_Connection=True;"
+  "context": "Server=(localdb)\\MSSQLLocalDB;Database=CoreManagerDb;Trusted_Connection=True;"
 }
 ```
 
@@ -84,8 +86,47 @@ Once running, Swagger will be available at:
 
 ---
 
+## 🔐 Authentication
+
+### 🔑 Admin Login
+
+Use the following endpoint to authenticate and receive a **JWT token**:
+
+```http
+POST /api/admin/login
+```
+
+**Request Body:**
+```json
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+✅ Upon successful login, the token must be sent as a **Bearer Token** in the `Authorization` header for all subsequent requests.
+
+---
+
+## 👩‍💻 Predefined Admin User for Testing
+
+A default admin user is seeded automatically:
+
+- 👤 **Username:** `admin`
+- 🔐 **Password:** `admin123`
+
+Use these credentials to test login and access secure admin features.
+
+---
+
 ## 📡 API Endpoints
 
+### 🔓 Public
+| Method | Route | Description |
+|--------|-------|-------------|
+| POST | `/api/admin/login` | Authenticate and receive JWT |
+
+### 🔐 Protected (Require JWT)
 | Method | Route | Description |
 |--------|-------|-------------|
 | GET | `/api/users` | Retrieve all users |
@@ -93,6 +134,15 @@ Once running, Swagger will be available at:
 | POST | `/api/users` | Create a new user |
 | PUT | `/api/users/{id}` | Update user |
 | DELETE | `/api/users/{id}` | Delete user |
+| GET | `/api/admin/users` | List all administrators |
+| POST | `/api/admin/users` | Create new admin user |
+| PUT | `/api/admin/users/{id}` | Update admin |
+| DELETE | `/api/admin/users/{id}` | Delete admin |
+
+⚠️ Remember to include the **Authorization** header:
+```http
+Authorization: Bearer <your_token>
+```
 
 ---
 
@@ -107,4 +157,5 @@ Web Engineering Project
 ## 📌 Project Status
 
 ✅ Backend fully functional  
-✅ Frontend fully integrated and responsive
+✅ Frontend fully integrated and responsive  
+✅ JWT-based authentication and admin management implemented
