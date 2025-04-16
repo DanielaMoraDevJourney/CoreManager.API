@@ -5,23 +5,18 @@ using CoreManager.API.CoreManager.Infraestructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // DbContext
-/*builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AppDbContext")
         ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
-*/
 
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("AppDbContext"),
-        new MySqlServerVersion(new Version(8, 0, 3)) 
-    ));
+
+
 
 // Auth
 builder.Services.AddAuthentication("Bearer")
