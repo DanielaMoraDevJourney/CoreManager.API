@@ -53,6 +53,7 @@ builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 builder.Services.AddScoped<UserService>();
 
 // Swagger y MVC
+builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 builder.Services.AddScoped<AuthService>(); 
 builder.Services.AddControllers();
